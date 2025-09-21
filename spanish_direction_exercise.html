@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio: Orientación Espacial</title>
+    <style>
+        body {
+            font-family: 'Comic Sans MS', cursive;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+        }
+        
+        h1 {
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .subtitle {
+            text-align: center;
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            opacity: 0.9;
+        }
+        
+        .score-board {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 15px 25px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+        
+        .vocabulary-reminder {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .vocab-item {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 8px 12px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 500;
+            font-size: 0.95em;
+        }
+        
+        .exercise-container {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+        
+        .question-number {
+            background: #ff6b6b;
+            color: white;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.5em;
+        }
+        
+        .next-btn {
+            background: #2ed573;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: none;
+        }
+        
+        .next-btn:hover {
+            background: #26d065;
+            transform: scale(1.05);
+        }
+        
+        .scenario-display {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .visual-area {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            background: linear-gradient(45deg, #f8f9fa, #e9ecef);
+            border-radius: 15px;
+            border: 4px solid #333;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        
+        .grid-lines {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(to right, rgba(0,0,0,0.1) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(0,0,0,0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+        }
+        
+        .center-lines {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(to right, transparent 148px, rgba(255,0,0,0.3) 149px, rgba(255,0,0,0.3) 151px, transparent 152px),
+                linear-gradient(to bottom, transparent 148px, rgba(255,0,0,0.3) 149px, rgba(255,0,0,0.3) 151px, transparent 152px);
+        }
+        
+        .target {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background: #ff4757;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 25px;
+            box-shadow: 0 5px 15px rgba(255, 71, 87, 0.4);
+            border: 4px solid #fff;
+            animation: targetPulse 2s infinite;
+        }
+        
+        @keyframes targetPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        .laser {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background: #2ed573;
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+            box-shadow: 0 5px 15px rgba(46, 213, 115, 0.4);
+            border: 3px solid #fff;
+            animation: laserGlow 1.5s infinite alternate;
+        }
+        
+        @keyframes laserGlow {
+            0% { filter: brightness(1); }
+            100% { filter: brightness(1.2); }
+        }
+        
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .option-btn {
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+            border: 3px solid transparent;
+            padding: 18px;
+            border-radius: 15px;
+            font-size: 1.2em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            position: relative;
+        }
+        
+        .option-btn:hover {
+            background: rgba(255, 255, 255, 1);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+        
+        .option-btn.correct {
+            background: #2ed573;
+            color: white;
+            border-color: #26d065;
+            animation: correctPulse 0.6s ease-out;
+        }
+        
+        .option-btn.incorrect {
+            background: #ff4757;
+            color: white;
+            border-color: #ff3742;
+            animation: incorrectShake 0.6s ease-out;
+        }
+        
+        @keyframes correctPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        @keyframes incorrectShake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+        
+        .feedback {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 15px;
+            font-size: 1.2em;
+            font-weight: 600;
+            text-align: center;
+            display: none;
+        }
+        
+        .feedback.correct {
+            background: rgba(46, 213, 115, 0.2);
+            border: 2px solid #2ed573;
+            color: #2ed573;
+        }
+        
+        .feedback.incorrect {
+            background: rgba(255, 71, 87, 0.2);
+            border: 2px solid #ff4757;
+            color: #ff4757;
+        }
+        
+        .completion-screen {
+            text-align: center;
+            padding: 40px;
+            display: none;
+        }
+        
+        .completion-screen h2 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            color: #2ed573;
+        }
+        
+        .final-score {
+            font-size: 2em;
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(46, 213, 115, 0.2);
+            border-radius: 15px;
+            border: 2px solid #2ed573;
+        }
+        
+        .restart-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 1.3em;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .restart-btn:hover {
+            background: #5a6fd8;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎯 Ejercicio de Orientación 🎯</h1>
+        <p class="subtitle">Guía el láser verde hacia la diana roja</p>
+        
+        <div class="vocabulary-reminder">
+            <h3>📚 Vocabulario disponible:</h3>
+            <div class="vocab-grid">
+                <div class="vocab-item">a la derecha</div>
+                <div class="vocab-item">a la izquierda</div>
+                <div class="vocab-item">arriba / para arriba</div>
+                <div class="vocab-item">abajo / para abajo</div>
+                <div class="vocab-item">en el centro</div>
+                <div class="vocab-item">un poco</div>
+                <div class="vocab-item">un poquito</div>
+                <div class="vocab-item">para</div>
+                <div class="vocab-item">ya</div>
+                <div class="vocab-item">está</div>
+                <div class="vocab-item">es</div>
+            </div>
+        </div>
+        
+        <div class="score-board">
+            <span>Pregunta: <span id="currentQuestion">1</span> / 30</span>
+            <span>Aciertos: <span id="score">0</span> / <span id="totalQuestions">0</span></span>
+            <span>Porcentaje: <span id="percentage">0</span>%</span>
+        </div>
+        
+        <div id="exerciseContainer" class="exercise-container">
+            <div class="question-header">
+                <div id="questionNumber" class="question-number">1</div>
+                <button id="nextBtn" class="next-btn" onclick="nextQuestion()">Siguiente →</button>
+            </div>
+            
+            <div class="scenario-display">
+                <div class="visual-area">
+                    <div class="grid-lines"></div>
+                    <div class="center-lines"></div>
+                    <div id="target" class="target">🎯</div>
+                    <div id="laser" class="laser"></div>
+                </div>
+            </div>
+            
+            <div id="optionsGrid" class="options-grid">
+                <!-- Les options seront générées par JavaScript -->
+            </div>
+            
+            <div id="feedback" class="feedback">
+                <!-- Le feedback sera affiché ici -->
+            </div>
+        </div>
+        
+        <div id="completionScreen" class="completion-screen">
+            <h2>¡Felicidades! 🎉</h2>
+            <p>¡Has completado el ejercicio de orientación!</p>
+            <div id="finalScore" class="final-score"></div>
+            <p>¡Ya estás listo/a para el juego de tiro con los ojos vendados!</p>
+            <button class="restart-btn" onclick="restartExercise()">Empezar de nuevo</button>
+        </div>
+    </div>
+
+    <script>
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let hasAnswered = false;
+        
+        const exercises = [
+            // Questions 1-5: Directions simples
+            {
+                laserPos: { top: 125, left: 125 },
+                targetPos: { top: 50, left: 125 },
+                correct: "para arriba",
+                options: ["para arriba", "para abajo", "a la derecha", "a la izquierda"]
+            },
+            {
+                laserPos: { top: 125, left: 125 },
+                targetPos: { top: 200, left: 125 },
+                correct: "para abajo",
+                options: ["para arriba", "para abajo", "a la derecha", "en el centro"]
+            },
+            {
+                laserPos: { top: 125, left: 125 },
+                targetPos: { top: 125, left: 200 },
+                correct: "a la derecha",
+                options: ["a la derecha", "a la izquierda", "para arriba", "para abajo"]
+            },
+            {
+                laserPos: { top: 125, left: 125 },
+                targetPos: { top: 125, left: 50 },
+                correct: "a la izquierda",
+                options: ["a la derecha", "a la izquierda", "para arriba", "para abajo"]
+            },
+            {
+                laserPos: { top: 125, left: 125 },
+                targetPos: { top: 125, left: 125 },
+                correct: "ya está en el centro",
+                options: ["para arriba", "ya está en el centro", "a la derecha", "para abajo"]
+            },
+            
+            // Questions 6-10: Ajustements fins
+            {
+                laserPos: { top: 125, left: 125 },
+                targetPos: { top: 100, left: 125 },
+                correct: "un poquito para arriba",
+                options: ["un poquito para arriba", "para arriba", "un poco para abajo", "ya está"]
+            },
+            {
+                laserPos: { top: 125, left: 125 },
+                targetPos: { top: 125, left: 150 },
+                correct: "un poco a la derecha",
+                options: ["a la derecha", "un poco a la derecha", "un poquito a la izquierda", "para"]
+            },
+            {
+                laserPos: { top: 120, left: 120 },
+                targetPos: { top: 125, left: 125 },
+                correct: "ya está bien",
+                options: ["para arriba", "ya está bien", "un poco más", "para abajo"]
+            },
+            {
+                laserPos: { top: 125, left: 125 },
+                targetPos: { top: 140, left: 125 },
+                correct: "un poquito para abajo",
+                options: ["para abajo", "un poquito para abajo", "un poco para arriba", "está bien"]
+            },
+            {
+                laserPos: { top: 125, left: 125 },
+                targetPos: { top: 125, left: 110 },
+                correct: "un poquito a la izquierda",
+                options: ["a la izquierda", "un poquito a la izquierda", "un poco a la derecha", "para"]
+            },
+            
+            // Questions 11-15: Directions composées
+            {
+                laserPos: { top: 125, left: 125 },
+                targetPos: { top: 75, left: 175 },
+                correct: "arriba y a la derecha",
+                options: ["arriba y a la derecha", "abajo y a la izquierda", "para arriba", "a la derecha"]
+            },
+            {
+                laserPos: { top: 125, left: 125 },
+                targetPos: { top: 175, left: 75 },
+                correct: "abajo y a la izquierda",
+                options: ["arriba y a la derecha", "abajo y a la izquierda", "para abajo", "a la izquierda"]
+            },
+            {
+                laserPos: { top: 125, left: 125 },
+                targetPos: { top: 75, left: 75 },
+                correct: "arriba y a la izquierda",
+                options: ["arriba y a la izquierda", "abajo y a la derecha", "para arriba", "a la izquierda"]
+            },
+            {
+                laserPos: { top: 125, left: 125 },
+                targetPos: { top: 175, left: 175 },
+                correct: "abajo y a la derecha",
+                options: ["arriba y a la izquierda", "abajo y a la derecha", "para abajo", "a la derecha"]
+            },
+            {
+                laserPos: { top: 100, left: 100 },
+                targetPos: { top: 125, left: 125 },
+                correct: "un poco abajo y derecha",
+                options: ["un poco abajo y derecha", "un poco arriba y izquierda", "para el centro", "ya está"]
+            },
+            
+            // Questions 16-20: Depuis les bords
+            {
+                laserPos: { top: 50, left: 125 },
+                targetPos: { top: 125, left: 125 },
+                correct: "para abajo al centro",
+                options: ["para abajo al centro", "para arriba", "está bien", "a la derecha"]
+            },
+            {
+                laserPos: { top: 200, left: 125 },
+                targetPos: { top: 125, left: 125 },
+                correct: "para arriba al centro",
+                options: ["para abajo", "para arriba al centro", "está en centro", "a la izquierda"]
+            },
+            {
+                laserPos: { top: 125, left: 50 },
+                targetPos: { top: 125, left: 125 },
+                correct: "a la derecha al centro",
+                options: ["a la izquierda", "a la derecha al centro", "para arriba", "ya está"]
+            },
+            {
+                laserPos: { top: 125, left: 200 },
+                targetPos: { top: 125, left: 125 },
+                correct: "a la izquierda al centro",
+                options: ["a la derecha", "a la izquierda al centro", "para abajo", "está bien"]
+            },
+            {
+                laserPos: { top: 50, left: 50 },
+                targetPos: { top: 125, left: 125 },
+                correct: "abajo y derecha al centro",
+                options: ["abajo y derecha al centro", "arriba y izquierda", "para el centro", "ya está"]
+            },
+            
+            // Questions 21-25: Situations complexes
+            {
+                laserPos: { top: 200, left: 200 },
+                targetPos: { top: 50, left: 50 },
+                correct: "arriba y a la izquierda",
+                options: ["arriba y a la izquierda", "abajo y a la derecha", "para el centro", "está lejos"]
+            },
+            {
+                laserPos: { top: 125, left: 125 },
+                targetPos: { top: 90, left: 160 },
+                correct: "un poco arriba y derecha",
+                options: ["un poco arriba y derecha", "un poco abajo y izquierda", "para arriba", "a la derecha"]
+            },
+            {
+                laserPos: { top: 80, left: 170 },
+                targetPos: { top: 125, left: 125 },
+                correct: "abajo y a la izquierda",
+                options: ["arriba y a la derecha", "abajo y a la izquierda", "para el centro", "está cerca"]
+            },
+            {
+                laserPos: { top: 125, left: 125 },
+                targetPos: { top: 115, left: 135 },
+                correct: "un poquito arriba y derecha",
+                options: ["un poquito arriba y derecha", "un poquito abajo y izquierda", "ya está", "para"]
+            },
+            {
+                laserPos: { top: 130, left: 120 },
+                targetPos: { top: 125, left: 125 },
+                correct: "ya está muy cerca",
+                options: ["para arriba", "ya está muy cerca", "un poco más", "para abajo"]
+            },
+            
+            // Questions 26-30: Situations finales
+            {
+                laserPos: { top: 50, left: 200 },
+                targetPos: { top: 200, left: 50 },
+                correct: "abajo y a la izquierda",
+                options: ["arriba y a la derecha", "abajo y a la izquierda", "para el centro", "es difícil"]
+            },
+            {
+                laserPos: { top: 125, left: 125 },
+                targetPos: { top: 125, left: 130 },
+                correct: "un poquito a la derecha",
+                options: ["a la derecha", "un poquito a la derecha", "ya está", "para"]
+            },
+            {
+                laserPos: { top: 122, left: 128 },
+                targetPos: { top: 125, left: 125 },
+                correct: "para, ya está perfecto",
+                options: ["un poco más", "para, ya está perfecto", "arriba", "izquierda"]
+            },
+            {
+                laserPos: { top: 75, left: 75 },
+                targetPos: { top: 175, left: 175 },
+                correct: "abajo y a la derecha",
+                options: ["arriba y a la izquierda", "abajo y a la derecha", "para el centro", "muy lejos"]
+            },
+            {
+                laserPos: { top: 125, left: 125 },
+                targetPos: { top: 125, left: 125 },
+                correct: "¡Perfecto! ¡Para!",
+                options: ["un poco más", "para arriba", "¡Perfecto! ¡Para!", "a la derecha"]
+            }
+        ];
+        
+        function showQuestion(index) {
+            const exercise = exercises[index];
+            const target = document.getElementById('target');
+            const laser = document.getElementById('laser');
+            const optionsGrid = document.getElementById('optionsGrid');
+            const questionNumber = document.getElementById('questionNumber');
+            const currentQuestion = document.getElementById('currentQuestion');
+            const feedback = document.getElementById('feedback');
+            const nextBtn = document.getElementById('nextBtn');
+            
+            // Reset state
+            hasAnswered = false;
+            feedback.style.display = 'none';
+            nextBtn.style.display = 'none';
+            
+            // Update question number
+            questionNumber.textContent = index + 1;
+            currentQuestion.textContent = index + 1;
+            
+            // Position elements
+            target.style.top = exercise.targetPos.top + 'px';
+            target.style.left = exercise.targetPos.left + 'px';
+            laser.style.top = exercise.laserPos.top + 'px';
+            laser.style.left = exercise.laserPos.left + 'px';
+            
+            // Create option buttons
+            optionsGrid.innerHTML = '';
+            exercise.options.forEach(option => {
+                const button = document.createElement('button');
+                button.className = 'option-btn';
+                button.textContent = option;
+                button.onclick = () => selectAnswer(option, exercise.correct);
+                optionsGrid.appendChild(button);
+            });
+        }
+        
+        function selectAnswer(selected, correct) {
+            if (hasAnswered) return;
+            
+            hasAnswered = true;
+            const buttons = document.querySelectorAll('.option-btn');
+            const feedback = document.getElementById('feedback');
+            const nextBtn = document.getElementById('nextBtn');
+            
+            // Update score
+            const totalQuestions = document.getElementById('totalQuestions');
+            totalQuestions.textContent = parseInt(totalQuestions.textContent) + 1;
+            
+            if (selected === correct) {
+                score++;
+                document.getElementById('score').textContent = score;
+                
+                // Mark correct button
+                buttons.forEach(btn => {
+                    if (btn.textContent === correct) {
+                        btn.classList.add('correct');
+                    }
+                });
+                
+                // Show positive feedback
+                feedback.textContent = '¡Muy bien! ✨ Respuesta correcta.';
+                feedback.className = 'feedback correct';
+            } else {
+                // Mark incorrect and correct buttons
+                buttons.forEach(btn => {
+                    if (btn.textContent === selected) {
+                        btn.classList.add('incorrect');
+                    }
+                    if (btn.textContent === correct) {
+                        btn.classList.add('correct');
+                    }
+                });
+                
+                // Show negative feedback
+                feedback.textContent = `La respuesta correcta es: "${correct}"`;
+                feedback.className = 'feedback incorrect';
+            }
+            
+            // Update percentage
+            const percentage = Math.round((score / parseInt(totalQuestions.textContent)) * 100);
+            document.getElementById('percentage').textContent = percentage;
+            
+            // Show feedback and next button
+            feedback.style.display = 'block';
+            nextBtn.style.display = 'block';
+            
+            // Disable all buttons
+            buttons.forEach(btn => {
+                btn.onclick = null;
+                btn.style.cursor = 'not-allowed';
+            });
+        }
+        
+        function nextQuestion() {
+            currentQuestionIndex++;
+            
+            if (currentQuestionIndex < exercises.length) {
+                showQuestion(currentQuestionIndex);
+            } else {
+                showCompletion();
+            }
+        }
+        
+        function showCompletion() {
+            document.getElementById('exerciseContainer').style.display = 'none';
+            document.getElementById('completionScreen').style.display = 'block';
+            
+            const finalScore = document.getElementById('finalScore');
+            const percentage = Math.round((score / exercises.length) * 100);
+            finalScore.textContent = `Puntuación final: ${score}/${exercises.length} (${percentage}%)`;
+        }
+        
+        function restartExercise() {
+            currentQuestionIndex = 0;
+            score = 0;
+            document.getElementById('score').textContent = '0';
+            document.getElementById('totalQuestions').textContent = '0';
+            document.getElementById('percentage').textContent = '0';
+            
+            document.getElementById('exerciseContainer').style.display = 'block';
+            document.getElementById('completionScreen').style.display = 'none';
+            
+            showQuestion(0);
+        }
+        
+        // Initialize the exercise
+        document.addEventListener('DOMContentLoaded', function() {
+            showQuestion(0);
+        });
+    </script>
+</body>
+</html>
