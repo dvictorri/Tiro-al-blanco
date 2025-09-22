@@ -169,7 +169,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 25px;
+            font-size: 35px;
             box-shadow: 0 5px 15px rgba(255, 71, 87, 0.4);
             border: 4px solid #fff;
             animation: targetPulse 2s infinite;
@@ -406,8 +406,8 @@
             {
                 laserPos: { top: 125, left: 125 },
                 targetPos: { top: 125, left: 125 },
-                correct: "ya está en el centro",
-                options: ["para arriba", "ya está en el centro", "a la derecha", "para abajo"]
+                correct: "¡Ya! ¡Para!",
+                options: ["para arriba", "¡Ya! ¡Para!", "a la derecha", "para abajo"]
             },
             
             // Questions 6-10: Ajustements fins
@@ -421,153 +421,153 @@
                 laserPos: { top: 125, left: 125 },
                 targetPos: { top: 125, left: 150 },
                 correct: "un poco a la derecha",
-                options: ["a la derecha", "un poco a la derecha", "un poquito a la izquierda", "para"]
+                options: ["a la derecha", "un poco a la derecha", "un poquito a la izquierda", "ya"]
             },
             {
-                laserPos: { top: 120, left: 120 },
+                laserPos: { top: 125, left: 125 },
                 targetPos: { top: 125, left: 125 },
-                correct: "ya está bien",
-                options: ["para arriba", "ya está bien", "un poco más", "para abajo"]
+                correct: "ya",
+                options: ["para arriba", "ya", "un poco más", "para abajo"]
             },
             {
                 laserPos: { top: 125, left: 125 },
                 targetPos: { top: 140, left: 125 },
                 correct: "un poquito para abajo",
-                options: ["para abajo", "un poquito para abajo", "un poco para arriba", "está bien"]
+                options: ["para abajo", "un poquito para abajo", "un poco para arriba", "ya"]
             },
             {
                 laserPos: { top: 125, left: 125 },
                 targetPos: { top: 125, left: 110 },
                 correct: "un poquito a la izquierda",
-                options: ["a la izquierda", "un poquito a la izquierda", "un poco a la derecha", "para"]
+                options: ["a la izquierda", "un poquito a la izquierda", "un poco a la derecha", "ya"]
             },
             
             // Questions 11-15: Directions composées
             {
                 laserPos: { top: 125, left: 125 },
                 targetPos: { top: 75, left: 175 },
-                correct: "arriba y a la derecha",
-                options: ["arriba y a la derecha", "abajo y a la izquierda", "para arriba", "a la derecha"]
+                correct: "para arriba y a la derecha",
+                options: ["para arriba y a la derecha", "para abajo y a la izquierda", "para arriba", "a la derecha"]
             },
             {
                 laserPos: { top: 125, left: 125 },
                 targetPos: { top: 175, left: 75 },
-                correct: "abajo y a la izquierda",
-                options: ["arriba y a la derecha", "abajo y a la izquierda", "para abajo", "a la izquierda"]
+                correct: "para abajo y a la izquierda",
+                options: ["para arriba y a la derecha", "para abajo y a la izquierda", "para abajo", "a la izquierda"]
             },
             {
                 laserPos: { top: 125, left: 125 },
                 targetPos: { top: 75, left: 75 },
-                correct: "arriba y a la izquierda",
-                options: ["arriba y a la izquierda", "abajo y a la derecha", "para arriba", "a la izquierda"]
+                correct: "para arriba y a la izquierda",
+                options: ["para arriba y a la izquierda", "para abajo y a la derecha", "para arriba", "a la izquierda"]
             },
             {
                 laserPos: { top: 125, left: 125 },
                 targetPos: { top: 175, left: 175 },
-                correct: "abajo y a la derecha",
-                options: ["arriba y a la izquierda", "abajo y a la derecha", "para abajo", "a la derecha"]
+                correct: "para abajo y a la derecha",
+                options: ["para arriba y a la izquierda", "para abajo y a la derecha", "para abajo", "a la derecha"]
             },
             {
                 laserPos: { top: 100, left: 100 },
                 targetPos: { top: 125, left: 125 },
-                correct: "un poco abajo y derecha",
-                options: ["un poco abajo y derecha", "un poco arriba y izquierda", "para el centro", "ya está"]
+                correct: "un poco para abajo y a la derecha",
+                options: ["un poco para abajo y a la derecha", "un poco para arriba y a la izquierda", "ya", "para"]
             },
             
             // Questions 16-20: Depuis les bords
             {
                 laserPos: { top: 50, left: 125 },
                 targetPos: { top: 125, left: 125 },
-                correct: "para abajo al centro",
-                options: ["para abajo al centro", "para arriba", "está bien", "a la derecha"]
+                correct: "para abajo",
+                options: ["para abajo", "para arriba", "ya", "a la derecha"]
             },
             {
                 laserPos: { top: 200, left: 125 },
                 targetPos: { top: 125, left: 125 },
-                correct: "para arriba al centro",
-                options: ["para abajo", "para arriba al centro", "está en centro", "a la izquierda"]
+                correct: "para arriba",
+                options: ["para abajo", "para arriba", "ya", "a la izquierda"]
             },
             {
                 laserPos: { top: 125, left: 50 },
                 targetPos: { top: 125, left: 125 },
-                correct: "a la derecha al centro",
-                options: ["a la izquierda", "a la derecha al centro", "para arriba", "ya está"]
+                correct: "a la derecha",
+                options: ["a la izquierda", "a la derecha", "para arriba", "ya"]
             },
             {
                 laserPos: { top: 125, left: 200 },
                 targetPos: { top: 125, left: 125 },
-                correct: "a la izquierda al centro",
-                options: ["a la derecha", "a la izquierda al centro", "para abajo", "está bien"]
+                correct: "a la izquierda",
+                options: ["a la derecha", "a la izquierda", "para abajo", "ya"]
             },
             {
                 laserPos: { top: 50, left: 50 },
                 targetPos: { top: 125, left: 125 },
-                correct: "abajo y derecha al centro",
-                options: ["abajo y derecha al centro", "arriba y izquierda", "para el centro", "ya está"]
+                correct: "abajo y derecha",
+                options: ["abajo y derecha", "arriba y izquierda", "para", "ya"]
             },
             
             // Questions 21-25: Situations complexes
             {
                 laserPos: { top: 200, left: 200 },
                 targetPos: { top: 50, left: 50 },
-                correct: "arriba y a la izquierda",
-                options: ["arriba y a la izquierda", "abajo y a la derecha", "para el centro", "está lejos"]
+                correct: "para arriba y a la izquierda",
+                options: ["para arriba y a la izquierda", "para abajo y a la derecha", "ya", "para"]
             },
             {
                 laserPos: { top: 125, left: 125 },
                 targetPos: { top: 90, left: 160 },
-                correct: "un poco arriba y derecha",
-                options: ["un poco arriba y derecha", "un poco abajo y izquierda", "para arriba", "a la derecha"]
+                correct: "un poco para arriba y a la derecha",
+                options: ["un poco para arriba y a la derecha", "un poco para abajo y a la izquierda", "para arriba", "ya"]
             },
             {
                 laserPos: { top: 80, left: 170 },
                 targetPos: { top: 125, left: 125 },
-                correct: "abajo y a la izquierda",
-                options: ["arriba y a la derecha", "abajo y a la izquierda", "para el centro", "está cerca"]
+                correct: "para abajo y a la izquierda",
+                options: ["para arriba y a la derecha", "para abajo y a la izquierda", "ya", "para"]
             },
             {
                 laserPos: { top: 125, left: 125 },
                 targetPos: { top: 115, left: 135 },
-                correct: "un poquito arriba y derecha",
-                options: ["un poquito arriba y derecha", "un poquito abajo y izquierda", "ya está", "para"]
+                correct: "un poquito para arriba y a la derecha",
+                options: ["un poquito para arriba y a la derecha", "un poquito para abajo y a la izquierda", "ya", "para"]
             },
             {
-                laserPos: { top: 130, left: 120 },
+                laserPos: { top: 125, left: 125 },
                 targetPos: { top: 125, left: 125 },
-                correct: "ya está muy cerca",
-                options: ["para arriba", "ya está muy cerca", "un poco más", "para abajo"]
+                correct: "ya",
+                options: ["para arriba", "ya", "un poco más", "para abajo"]
             },
             
             // Questions 26-30: Situations finales
             {
                 laserPos: { top: 50, left: 200 },
                 targetPos: { top: 200, left: 50 },
-                correct: "abajo y a la izquierda",
-                options: ["arriba y a la derecha", "abajo y a la izquierda", "para el centro", "es difícil"]
+                correct: "para abajo y a la izquierda",
+                options: ["para arriba y a la derecha", "para abajo y a la izquierda", "ya", "para"]
             },
             {
                 laserPos: { top: 125, left: 125 },
                 targetPos: { top: 125, left: 130 },
                 correct: "un poquito a la derecha",
-                options: ["a la derecha", "un poquito a la derecha", "ya está", "para"]
-            },
-            {
-                laserPos: { top: 122, left: 128 },
-                targetPos: { top: 125, left: 125 },
-                correct: "para, ya está perfecto",
-                options: ["un poco más", "para, ya está perfecto", "arriba", "izquierda"]
-            },
-            {
-                laserPos: { top: 75, left: 75 },
-                targetPos: { top: 175, left: 175 },
-                correct: "abajo y a la derecha",
-                options: ["arriba y a la izquierda", "abajo y a la derecha", "para el centro", "muy lejos"]
+                options: ["a la derecha", "un poquito a la derecha", "ya", "para"]
             },
             {
                 laserPos: { top: 125, left: 125 },
                 targetPos: { top: 125, left: 125 },
-                correct: "¡Perfecto! ¡Para!",
-                options: ["un poco más", "para arriba", "¡Perfecto! ¡Para!", "a la derecha"]
+                correct: "ya, para",
+                options: ["un poco más", "ya, para", "arriba", "izquierda"]
+            },
+            {
+                laserPos: { top: 75, left: 75 },
+                targetPos: { top: 175, left: 175 },
+                correct: "para abajo y a la derecha",
+                options: ["para arriba y a la izquierda", "para abajo y a la derecha", "ya", "para"]
+            },
+            {
+                laserPos: { top: 125, left: 125 },
+                targetPos: { top: 125, left: 125 },
+                correct: "¡Ya! ¡Para!",
+                options: ["un poco más", "para arriba", "¡Ya! ¡Para!", "a la derecha"]
             }
         ];
         
